@@ -5,6 +5,7 @@ struct UserProfile: Identifiable, Codable, Equatable {
     var displayName: String
     var selfWords: [String]      // 5件固定
     var targetWords: [String]    // 5件固定
+    var isDiscoverable: Bool     // 相手の検索結果に載るかどうか（アプリ内ON/OFF）
 
     var isValid: Bool {
         selfWords.count == 5 && targetWords.count == 5

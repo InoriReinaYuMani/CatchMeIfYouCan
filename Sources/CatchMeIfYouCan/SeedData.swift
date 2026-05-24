@@ -5,7 +5,8 @@ enum SeedData {
         id: "me",
         displayName: "You",
         selfWords: ["coffee", "travel", "movie", "dog", "coding"],
-        targetWords: ["travel", "music", "cat", "book", "startup"]
+        targetWords: ["travel", "music", "cat", "book", "startup"],
+        isDiscoverable: false // デフォルトは非公開。アプリ内ONで公開。
     )
 
     static let candidates: [UserProfile] = [
@@ -13,13 +14,15 @@ enum SeedData {
             id: "u1",
             displayName: "Alex",
             selfWords: ["music", "travel", "cat", "gym", "book"],
-            targetWords: ["coding", "movie", "coffee", "design", "dog"]
+            targetWords: ["coding", "movie", "coffee", "design", "dog"],
+            isDiscoverable: true
         ),
         UserProfile(
             id: "u2",
             displayName: "Taylor",
             selfWords: ["hiking", "tea", "startup", "book", "movie"],
-            targetWords: ["travel", "dog", "coffee", "music", "sports"]
+            targetWords: ["travel", "dog", "coffee", "music", "sports"],
+            isDiscoverable: false
         )
     ]
 }

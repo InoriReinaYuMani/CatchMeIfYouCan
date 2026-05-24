@@ -4,6 +4,7 @@ enum MatchingEngine {
     static func rankCandidates(for currentUser: UserProfile, candidates: [UserProfile]) -> [(profile: UserProfile, score: Double)] {
         candidates
             .filter { $0.id != currentUser.id }
+            .filter(\.isDiscoverable)
             .map { profile in
                 (profile, calculateScore(targetWords: currentUser.targetWords, selfWords: profile.selfWords))
             }
