@@ -64,3 +64,15 @@
 - 候補検索はバックグラウンドで定期実行（`BackgroundMatchService`）
 - 自分を相手の検索結果へ表示するには、アプリ内の公開スイッチを **ON** にする
 - 公開OFFのユーザーは `isDiscoverable = false` となり、相手の候補一覧に出ない
+
+
+## 7. 部分一致をAIで判定する拡張
+
+`MatchingEngine` には `WordRelationScoring` プロトコルを追加しており、
+OpenAI embeddings 等を使って「travel」と「trip」のような関連語を判定できます。
+
+- 関連度スコア: `0.0 ... 1.0`
+- しきい値: `relatednessThreshold`（デフォルト `0.75`）
+- しきい値以上なら関連語一致として `+0.7`
+
+この構成により、将来的に API 実装だけ差し替えて精度改善が可能です。

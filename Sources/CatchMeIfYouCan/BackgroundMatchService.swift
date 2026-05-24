@@ -11,6 +11,8 @@ actor BackgroundMatchService {
     func startBackgroundSearch(
         currentUserProvider: @escaping @Sendable () async -> UserProfile,
         candidatesProvider: @escaping @Sendable () async -> [UserProfile],
+        relationScorer: WordRelationScoring? = nil,
+        relatednessThreshold: Double = 0.75,
         intervalSeconds: UInt64 = 30
     ) {
         stopBackgroundSearch()
@@ -20,9 +22,16 @@ actor BackgroundMatchService {
                 let currentUser = await currentUserProvider()
                 let candidates = await candidatesProvider()
 
-                // currentUser が非公開のときは「相手を探す」だけ可能。
-                // ただし相手側の検索結果には currentUser は表示されない（isDiscoverable = false）。
-                latestMatches = MatchingEngine.rankCandidates(for: currentUser, candidates: candidates)
+                if let relationScorer {
+                    latestMatches = await MatchingEngine.rankCandidates(
+                        for: currentUser,
+                        candidates: candidates,
+                        relationScorer: relationScorer,
+                        relatednessThreshold: relatednessThreshold
+                    )
+                } else {
+                    latestMatches = MatchingEngine.rankCandidates(for: currentUser, candidates: candidates)
+                }
 
                 try? await Task.sleep(nanoseconds: intervalSeconds * 1_000_000_000)
             }
