@@ -9,6 +9,7 @@ enum SeedData {
         isDiscoverable: true,
         locationSharingEnabled: true,
         searchRadiusMeters: 800
+        isDiscoverable: false // デフォルトは非公開。アプリ内ONで公開。
     )
 
     static let candidates: [UserProfile] = [
